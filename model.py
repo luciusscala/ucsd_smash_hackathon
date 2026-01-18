@@ -93,9 +93,9 @@ def main(args):
     img_size = 256
     model = Model(image_dim=img_size,output_scale=3.0)
     model.compile(optimizer=tf.keras.optimizers.Adam(1e-4), loss=tf.keras.losses.MeanSquaredError(), metrics=[tf.keras.metrics.MeanAbsoluteError()])
-    model.build(input_shape=(None, img_size, img_size, 3))
+    # model.build(input_shape=(None, img_size, img_size, 3))
 
-    if (args.train):
+    if (args.command == 'train'):
         train(args, model, load_dataset("./data/dataset_w_tensors"))
 
     return 0
@@ -105,7 +105,7 @@ parser = argparse.ArgumentParser()
 subparsers = parser.add_subparsers()
 
 # Train subcommand
-train_parser = subparsers.add_parser('train')
+train_parser = subparsers.add_parser('train', dest='command')
 train_parser.add_argument('-b', "--batch-size", type=int, default=32, help="number of datapoints to train on for each iteration")
 
 # Collect command-line arguments
